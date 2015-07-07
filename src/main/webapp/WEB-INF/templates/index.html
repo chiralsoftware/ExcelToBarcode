@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <title>Excel To Barcode</title>
+        <style>
+            tbody tr:nth-child(even) {
+                background-color: yellowgreen;
+            }
+            html {
+                font-family: sans-serif;
+            }
+        </style>
+        <script src="excel.js"/>
+        <script>
+            window.onload = activateExcel;
+            function goNewWin() {
+
+                var NewWinHeight = 600;
+                var NewWinWidth = 800;
+
+                var NewWinPutX = 10;
+                var NewWinPutY = 10;
+
+                TheNewWin = window.open("help.html", 'TheNewpop',
+                        'fullscreen=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes, resizable = no'); 
+
+                TheNewWin.resizeTo(NewWinHeight, NewWinWidth);
+                TheNewWin.moveTo(NewWinPutX, NewWinPutY);
+            }
+            function fileSelected() {
+                document.getElementById('uploadButton').disabled = false;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Excel To Barcode</h1>
+
+        <p>This site does only one thing: turn your Excel spreadsheet into barcode labels.</p>
+
+        <p><input type="button" value="HELP" onclick="goNewWin()"/></p>
+
+        <form method="post" action="#" enctype="multipart/form-data">
+            <fieldset>
+                <legend>Upload contacts from an Excel spreadsheet</legend>
+                <input type="file" onchange="fileSelected();" 
+                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                       id="fileToUpload" name="fileToUpload" /><br/>
+
+                <input type="submit" id="uploadButton" disabled="disabled"
+                       value="Upload Excel spreadsheet"/>
+            </fieldset>
+        </form>
+        <form method="post" th:action="export.pdf">
+
+            <fieldset>
+                Select a label format:
+                <ul>
+                    <li th:each="labelFormat : ${T(chiralsoftware.exceltobarcode.LabelFormat).values()}">
+                        <input name="labelFormatString" th:id="${labelFormat + '_id'}"  
+                               th:checked="${labelFormat == T(chiralsoftware.exceltobarcode.LabelFormat).AVERY5160}" 
+                               type="radio" th:value="${labelFormat}" />
+                        <label th:for="${labelFormat + '_id'}" 
+                               th:text="${labelFormat + ' - ' + labelFormat.columns + ' across by ' + labelFormat.rows + ' down'}">Wireframe</label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <fieldset>
+                <legend>
+                    How are the columns defined?
+                </legend>
+                <input type="submit" id="saveExcel" disabled="disabled" value="Generate labels"/>
+                <table id="excelTable" th:if="${columnList}">
+                    <thead>
+                        <tr id="lineSelectorTr">
+                            <th th:each="colNumber : ${columnList}">
+                                <select th:name="${'column_' + colNumber}">
+                                    <option th:each="option : ${optionList}"
+                                            th:value="${option}"
+                                            th:text="${option}">some value</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th th:each="colNumber : ${columnList}">
+                                <select th:name="${'column_type_' + colNumber}">
+                                    <option value="text">Text</option>
+                                    <option value="barcode">Barcode</option>
+                                </select>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row : ${sheetPreview}">
+                            <td th:each="cell : ${row}" th:style="${cell.style}" 
+                                th:text="${cell.text}">Note</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </fieldset>
+        </form>
+    </body>
+</html>
