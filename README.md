@@ -9,3 +9,5 @@ https://exceltobarcode.com/
 Please try it out.
 
 License: GNU Public License Version 3.
+
+Contact Chiral Software at https://chiralsoftware.com/ for licensing or consulting.
