@@ -51,8 +51,6 @@ final class ExcelColumnStatistics {
         return true;
     }
     private static final Set<String> stateSet;
-    private static final Set<String> citySet;
-    private static final Set<String> lastNameSet;
 
     static {
         final Set<String> s = new HashSet<>();
@@ -133,52 +131,7 @@ final class ExcelColumnStatistics {
         for(String stateString : stateArray) s.add(stateString.replaceAll("[^a-z]", ""));
         s.addAll(Arrays.asList(stateArray));
         stateSet = Collections.unmodifiableSet(s);
-        // load the USA cities from CSV resource
-        final String usCitiesResource = "/cities.csv";
-        InputStream is = ExcelColumnStatistics.class.getResourceAsStream(usCitiesResource);
-        if(is == null) throw new NullPointerException("Couldn't find a resource for: " + usCitiesResource);
-        CSVReader reader = new CSVReader(new InputStreamReader(is));
-        final Set<String> cs = new HashSet<>();
-        String[] nextLine;
-        try {
-            while ((nextLine = reader.readNext()) != null) {
-                // nextLine[] is an array of values from the line
-                cs.add(nextLine[2].toLowerCase().replaceAll("[^a-z]", ""));
-            }
-            is.close();
-        } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "couldn't read: " + usCitiesResource, ex);
-        }
-        // load Australian cities from CSV resource
-        final String australiaCitiesResource = "/australiantownslist.csv";
-        is = ExcelColumnStatistics.class.getResourceAsStream(australiaCitiesResource);
-        reader = new CSVReader(new InputStreamReader(is));
-        try {
-            reader.readNext(); // first line is title
-            while ((nextLine = reader.readNext()) != null) {
-                // nextLine[] is an array of values from the line
-                cs.add(nextLine[0].toLowerCase().replaceAll("[^a-z]", ""));
-            }
-            is.close();
-        } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "couldn't read: " + usCitiesResource, ex);
-        }
-        citySet = Collections.unmodifiableSet(cs);
 
-        // get the set of likely last name
-        final String lastNamesResource = "/last-names.txt";
-        is = ExcelColumnStatistics.class.getResourceAsStream(lastNamesResource);
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-        String oneLine;
-        final Set<String> ns = new HashSet();
-        try {
-            while ((oneLine = bufferedReader.readLine()) != null)
-                ns.add(oneLine.trim().toLowerCase());
-            is.close();
-        } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "couldn't read: " + usCitiesResource, ex);
-        }
-        lastNameSet = Collections.unmodifiableSet(ns);
     }
 
     private int rowCount = 0;
@@ -235,19 +188,6 @@ final class ExcelColumnStatistics {
             states++;
             return;
         }
-        if (citySet.contains(noBlankString)) {
-            cities++;
-        }
-        // now we tokenize the string, and see if it might be a name
-        final String[] splitString = string.split("\\s");
-        if(splitString.length < 4) 
-            for(String possibleName : splitString) {
-                if(lastNameSet.contains(possibleName)) {
-                    names++;
-                    break;
-                }
-            }
-
     }
 
     private static final Option noneOption = new Option("none", "---");
