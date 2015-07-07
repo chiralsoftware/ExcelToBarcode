@@ -12,7 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework-version>4.1.6.RELEASE</org.springframework-version>
+        <org.springframework-version>4.1.7.RELEASE</org.springframework-version>
     </properties>
     
     <dependencies>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
-            <version>1.2.8</version>
+            <version>1.2.9</version>
         </dependency>
 
         <!-- Handle Excel import -->
