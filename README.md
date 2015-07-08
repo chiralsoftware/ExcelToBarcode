@@ -11,3 +11,9 @@ Please try it out.
 License: GNU Public License Version 3.
 
 Contact Chiral Software at https://chiralsoftware.com/ for licensing or consulting.
+
+# Building and installing
+
+Build using mvn package.  This results in a WAR file.  Copy the WAR file to the deployment
+directory and start using it.  There's no configuration needed.  We have tested this
+on Apache Tomcat 8.0.x, but it should work on any modern Java web server.
