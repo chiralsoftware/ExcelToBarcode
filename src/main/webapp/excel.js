@@ -2,7 +2,7 @@
 /*
  * Javascript for managing Excel spreadsheet uploads
  * 
- * Copyright 2014, Chiral Software, Inc.
+ * Copyright 2014-2016, Chiral Software, Inc.
  */
 
 function activateExcel() {
