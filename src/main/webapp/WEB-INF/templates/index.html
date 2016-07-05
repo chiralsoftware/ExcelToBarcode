@@ -11,27 +11,7 @@
                 font-family: sans-serif;
             }
         </style>
-        <script src="excel.js"/>
-        <script>
-            window.onload = activateExcel;
-            function goNewWin() {
-
-                var NewWinHeight = 600;
-                var NewWinWidth = 800;
-
-                var NewWinPutX = 10;
-                var NewWinPutY = 10;
-
-                TheNewWin = window.open("help.html", 'TheNewpop',
-                        'fullscreen=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes, resizable = no'); 
-
-                TheNewWin.resizeTo(NewWinHeight, NewWinWidth);
-                TheNewWin.moveTo(NewWinPutX, NewWinPutY);
-            }
-            function fileSelected() {
-                document.getElementById('uploadButton').disabled = false;
-            }
-        </script>
+        <script src="excel.js"></script>
     </head>
     <body>
         <h1>Excel To Barcode</h1>
@@ -43,7 +23,7 @@
         <form method="post" action="#" enctype="multipart/form-data">
             <fieldset>
                 <legend>Upload contacts from an Excel spreadsheet</legend>
-                <input type="file" onchange="fileSelected();" 
+                <input type="file" onchange="fileSelected()" 
                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                        id="fileToUpload" name="fileToUpload" /><br/>
 

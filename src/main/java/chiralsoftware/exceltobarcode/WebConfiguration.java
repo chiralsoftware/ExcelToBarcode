@@ -1,11 +1,14 @@
 package chiralsoftware.exceltobarcode;
 
 import java.util.logging.Logger;
+import javax.servlet.MultipartConfigElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -26,7 +29,6 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private static final Logger LOG = Logger.getLogger(WebConfiguration.class.getName());
-    
     
     @Autowired
     private ApplicationContext applicationContext;
@@ -61,6 +63,11 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+    
+    @Bean 
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
     }
     
 }
