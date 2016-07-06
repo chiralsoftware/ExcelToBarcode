@@ -72,5 +72,6 @@ function goNewWin() {
     TheNewWin.moveTo(NewWinPutX, NewWinPutY);
 }
 
-// TODO: use jquery for this, and switch to TypeScript
-window.onload = activateExcel;
+$( document ).ready(function() {
+    $( "#fileToUpload" ).on("change", fileSelected());
+});

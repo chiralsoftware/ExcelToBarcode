@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-import org.apache.poi.hssf.usermodel.HSSFShapeTypes;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -33,6 +33,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -366,7 +367,6 @@ public class MainController {
             return new ResponseEntity<>(showBlank(), HttpStatus.OK);
         }
         
-        final HttpHeaders httpHeaders = new HttpHeaders();
         // we create a new document with zero left/right margins
         // we calculate the top and bottom margin
         final float topMargin = (PageSize.LETTER.getHeight() - labelFormat.getRows() * labelFormat.getHeight() * 72) / 2;
@@ -399,7 +399,10 @@ public class MainController {
         
         document.close();
         
-        final ResponseEntity<byte[]> result = new ResponseEntity<>(baos.toByteArray(), HttpStatus.OK);
+        final HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        final ResponseEntity<byte[]> result = new ResponseEntity<>(baos.toByteArray(), 
+                httpHeaders, HttpStatus.OK);
         return result;
     }
     

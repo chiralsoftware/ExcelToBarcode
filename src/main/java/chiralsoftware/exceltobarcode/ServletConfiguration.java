@@ -1,6 +1,8 @@
 package chiralsoftware.exceltobarcode;
 
 import java.util.logging.Logger;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -26,6 +28,16 @@ public class ServletConfiguration extends AbstractAnnotationConfigDispatcherServ
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+
+        final MultipartConfigElement multipartConfigElement
+                = new MultipartConfigElement(null, 5000000, 5000000, 0);
+        registration.setMultipartConfig(multipartConfigElement);
+        registration.setLoadOnStartup(1);
+        registration.addMapping("/");
     }
 
 }

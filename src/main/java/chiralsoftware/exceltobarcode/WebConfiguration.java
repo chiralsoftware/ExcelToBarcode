@@ -1,7 +1,6 @@
 package chiralsoftware.exceltobarcode;
 
 import java.util.logging.Logger;
-import javax.servlet.MultipartConfigElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
