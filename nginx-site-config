@@ -1,0 +1,14 @@
+server {
+
+	server_name exceltobarcode.com www.exceltobarcode.com;
+
+	location / {
+	      proxy_pass http://localhost:8080/ExcelToBarcode-1.0-SNAPSHOT/ ;
+	      proxy_cookie_path /ExcelToBarcode-1.0-SNAPSHOT / ;
+
+# if you are using TLS
+#	      add_header X-Forwarded-Proto HTTPS ;
+#	      add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+
+	}
+}
