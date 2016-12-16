@@ -6,7 +6,7 @@ of these components, and how, with only a little bit of code, you can create a u
 You can use this system live at:
 https://exceltobarcode.com/
 
-Please try it out.
+Please try it out. You can also download and install into any Java web server, such as Tomcat or Jetty.
 
 License: GNU Public License Version 3.
 
@@ -17,3 +17,7 @@ Contact Chiral Software at https://chiralsoftware.com/ for licensing or consulti
 Build using mvn package.  This results in a WAR file.  Copy the WAR file to the deployment
 directory and start using it.  There's no configuration needed.  We have tested this
 on Apache Tomcat 8.0.x, but it should work on any modern Java web server.
+
+# Installing with an Nginx reverse proxy
+
+Run it on Tomcat as usual. Set up the site with the nginx config example file.
