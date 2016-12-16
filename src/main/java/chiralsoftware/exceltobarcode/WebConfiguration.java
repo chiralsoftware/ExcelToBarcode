@@ -37,12 +37,13 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         final ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding("UTF-8");
-        resolver.setApplicationContext(applicationContext);
+//        resolver.setApplicationContext(applicationContext);
         return resolver;
     }
 
     private TemplateEngine templateEngine() {
         final SpringTemplateEngine engine = new SpringTemplateEngine();
+        engine.setEnableSpringELCompiler(true);
         engine.setTemplateResolver(templateResolver());
         return engine;
     }
@@ -51,11 +52,10 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     private ITemplateResolver templateResolver() {
         final SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
-        LOG.info("I set up the template resolver");
         resolver.setPrefix("/WEB-INF/templates/");
         resolver.setSuffix(".html");
-        resolver.setTemplateMode(TemplateMode.XML);
-        resolver.setCacheable(false); // during development 
+        resolver.setTemplateMode(TemplateMode.HTML);
+//        resolver.setCacheable(false); // during development 
         return resolver;
     }
 
