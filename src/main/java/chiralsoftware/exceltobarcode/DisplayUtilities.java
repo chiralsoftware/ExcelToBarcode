@@ -3,6 +3,7 @@ package chiralsoftware.exceltobarcode;
 import com.itextpdf.text.Font;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 /**
  *
@@ -27,22 +28,40 @@ public final class DisplayUtilities {
         
         final StringBuilder result = new StringBuilder();
         final CellStyle cellStyle = c.getCellStyle();
-        if(cellStyle.getAlignment() == CellStyle.ALIGN_LEFT) 
+        if(null == cellStyle.getAlignmentEnum()) 
             result.append("text-align: left; ");
-        else if(cellStyle.getAlignment() == CellStyle.ALIGN_CENTER) 
-            result.append("text-align: center; ");
-        else if(cellStyle.getAlignment() == CellStyle.ALIGN_RIGHT) 
-            result.append("text-align: right; ");
-        else result.append("text-align: left; ");
+        else switch (cellStyle.getAlignmentEnum()) {
+            case LEFT:
+                result.append("text-align: left; ");
+                break;
+            case CENTER:
+                result.append("text-align: center; ");
+                break;
+            case RIGHT:
+                result.append("text-align: right; ");
+                break;
+            default:
+                result.append("text-align: left; ");
+                break;
+        }
         
-        if(font.getFamily() == Font.FontFamily.COURIER) 
-            result.append("font-family: Courier, monospace; ");
-        else if(font.getFamily() == Font.FontFamily.HELVETICA) 
-            result.append("font-family: sans-serif; ");
-        else if(font.getFamily() == Font.FontFamily.SYMBOL) 
-            result.append("font-family: sans-serif; ");
-        else if(font.getFamily() == Font.FontFamily.TIMES_ROMAN) 
-            result.append("font-family: Times, serif; ");
+        if(null != font.getFamily()) 
+            switch (font.getFamily()) {
+            case COURIER:
+                result.append("font-family: Courier, monospace; ");
+                break;
+            case HELVETICA:
+                result.append("font-family: sans-serif; ");
+                break;
+            case SYMBOL:
+                result.append("font-family: sans-serif; ");
+                break;
+            case TIMES_ROMAN:
+                result.append("font-family: Times, serif; ");
+                break;
+            default:
+                break;
+        }
         
         result.append("font-size: ").append(Math.round(font.getSize())).append("pt;");
         

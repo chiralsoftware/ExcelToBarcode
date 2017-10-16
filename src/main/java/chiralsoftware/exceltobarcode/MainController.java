@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -241,13 +242,21 @@ public class MainController {
                     final Paragraph p = 
                             new Paragraph(getTrimmedString(myCell), findFont(excelCell));
                     p.setLeading(0.8f * fontSizeRatio * barcodeHeight);
+                    if(null != excelCell.getCellStyle().getAlignmentEnum()) 
 //                    p.setLeading(10);
-                    if(excelCell.getCellStyle().getAlignment() == CellStyle.ALIGN_LEFT) 
-                        p.setAlignment(Paragraph.ALIGN_LEFT);
-                    else if(excelCell.getCellStyle().getAlignment() == CellStyle.ALIGN_CENTER) 
-                        p.setAlignment(Paragraph.ALIGN_CENTER);
-                    else if(excelCell.getCellStyle().getAlignment() == CellStyle.ALIGN_RIGHT) 
-                        p.setAlignment(Paragraph.ALIGN_RIGHT);
+                    switch (excelCell.getCellStyle().getAlignmentEnum()) {
+                        case LEFT:
+                            p.setAlignment(Paragraph.ALIGN_LEFT);
+                            break;
+                        case CENTER:
+                            p.setAlignment(Paragraph.ALIGN_CENTER);
+                            break;
+                        case RIGHT:
+                            p.setAlignment(Paragraph.ALIGN_RIGHT);
+                            break;
+                        default:
+                            break;
+                    }
                     p.setSpacingAfter(barcodeHeight * 0.2f);
                     cell.addElement(p);
                 }
