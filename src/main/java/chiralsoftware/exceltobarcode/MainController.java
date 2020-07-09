@@ -24,8 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import static org.apache.poi.ss.usermodel.CellType.BLANK;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -102,7 +101,7 @@ public class MainController {
         final Set<Integer> result = new HashSet<>();
         for (Row r : sheet) {
             for(Cell c : r) {
-                if(c.getCellType() == Cell.CELL_TYPE_BLANK) continue;
+                if(c.getCellType() == BLANK) continue;
                 result.add(c.getColumnIndex());
             }
             if(count > 1000) break;

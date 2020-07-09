@@ -10,12 +10,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import org.apache.poi.ss.usermodel.Cell;
-import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BLANK;
-import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BOOLEAN;
-import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_ERROR;
-import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_FORMULA;
-import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
-import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING;
+import org.apache.poi.ss.usermodel.CellType;
 
 /**
  *
@@ -145,12 +140,12 @@ final class ExcelColumnStatistics {
     static final String getTrimmedString(Cell c) {
         if(c == null) return "";
         switch(c.getCellType()) {
-            case CELL_TYPE_BLANK: return "";
-            case CELL_TYPE_BOOLEAN: return Boolean.toString(c.getBooleanCellValue()); 
-            case CELL_TYPE_ERROR: return "";
-            case CELL_TYPE_FORMULA: return "";
-            case CELL_TYPE_NUMERIC: return Long.toString(Math.round(c.getNumericCellValue()));
-            case CELL_TYPE_STRING: return trim(c.getStringCellValue());
+            case BLANK: return "";
+            case BOOLEAN: return Boolean.toString(c.getBooleanCellValue()); 
+            case ERROR: return "";
+            case FORMULA: return "";
+            case NUMERIC: return Long.toString(Math.round(c.getNumericCellValue()));
+            case STRING: return trim(c.getStringCellValue());
         }
         LOG.warning("Unknown cell type: " + c.getCellType());
         return "";
