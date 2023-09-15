@@ -28,9 +28,9 @@ public final class DisplayUtilities {
         
         final StringBuilder result = new StringBuilder();
         final CellStyle cellStyle = c.getCellStyle();
-        if(null == cellStyle.getAlignmentEnum()) 
+        if(null == cellStyle.getAlignment()) 
             result.append("text-align: left; ");
-        else switch (cellStyle.getAlignmentEnum()) {
+        else switch (cellStyle.getAlignment()) {
             case LEFT:
                 result.append("text-align: left; ");
                 break;

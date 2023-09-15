@@ -36,8 +36,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -52,7 +53,7 @@ public class MainController {
     private static final Logger LOG = Logger.getLogger(MainController.class.getName());
     private static final String xlsxContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @GetMapping("/")
     public String main(Model model) {
         if(xSSFWorkbook == null) {
             LOG.info("The file is null");
@@ -62,7 +63,7 @@ public class MainController {
         model.addAttribute("sheetPreview", sheetPreview);
         model.addAttribute("optionList", optionList);
         model.addAttribute("columnList",  columnList);
-        return "/index";
+        return "index";
     }
     
     /** Return a preview of the spreadsheet */
@@ -127,7 +128,7 @@ public class MainController {
     
     private static final List<String> optionList;
     
-    @RequestMapping(value = "/",method = RequestMethod.POST)
+    @PostMapping("/")
     public String excelUpload(@RequestParam("fileToUpload") MultipartFile file, 
             Model model, RedirectAttributes redirectAttributes) throws IOException {
         LOG.info("Here I am and here is the multipart:");
@@ -241,9 +242,9 @@ public class MainController {
                     final Paragraph p = 
                             new Paragraph(getTrimmedString(myCell), findFont(excelCell));
                     p.setLeading(0.8f * fontSizeRatio * barcodeHeight);
-                    if(null != excelCell.getCellStyle().getAlignmentEnum()) 
+                    if(null != excelCell.getCellStyle().getAlignment()) 
 //                    p.setLeading(10);
-                    switch (excelCell.getCellStyle().getAlignmentEnum()) {
+                    switch (excelCell.getCellStyle().getAlignment()) {
                         case LEFT:
                             p.setAlignment(Paragraph.ALIGN_LEFT);
                             break;
